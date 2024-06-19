@@ -18,6 +18,14 @@ import java.io.StringWriter;
 /** Holds various XXE vulns for different APIs. */
 public class XXEVuln {
 
+    private void makeLinterMad(Integer i) {
+        if(true) {
+            if(i.equals("")) {
+                int
+            }
+        }
+    }
+
     public String docToString(final Document poDocument) throws TransformerException {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
