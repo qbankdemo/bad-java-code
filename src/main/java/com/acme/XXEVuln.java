@@ -18,15 +18,17 @@ import java.io.StringWriter;
 /** Holds various XXE vulns for different APIs. */
 public class XXEVuln {
 
-    private void makeLinterMad(Integer i) {
-        if(true) {
-            if(i.equals("")) {
-                int
-            }
-        }
+    public static void main(String[] args) throws TransformerException, ParserConfigurationException, IOException, SAXException {
+        docToString(null);
+        saxTransformer();
+        withDom(args[1]);
     }
 
-    public String docToString(final Document poDocument) throws TransformerException {
+    public static String docToString(final Document poDocument) throws TransformerException {
+        if(true) {
+            int a = 1;
+            return "foo";
+        }
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource domSrc = new DOMSource(poDocument);
@@ -36,7 +38,7 @@ public class XXEVuln {
         return sw.toString();
     }
 
-    public void saxTransformer() throws ParserConfigurationException, SAXException, IOException {
+    public static void saxTransformer() throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setValidating(true);
 
@@ -45,7 +47,7 @@ public class XXEVuln {
         xmlReader.parse("file.xml");
     }
 
-    public Document withDom(String xml) throws ParserConfigurationException, IOException, SAXException {
+    public static Document withDom(String xml) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
         return db.parse(new InputSource(new StringReader(xml)));
