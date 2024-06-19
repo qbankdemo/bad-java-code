@@ -14,14 +14,21 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /** Holds various XXE vulns for different APIs. */
 public class XXEVuln {
 
-    public static void main(String[] args) throws TransformerException, ParserConfigurationException, IOException, SAXException {
+    public static void main(String[] args) throws TransformerException, ParserConfigurationException, IOException, SAXException, SQLException {
         docToString(null);
         saxTransformer();
         withDom(args[1]);
+
+        String sql = "select * from users where name= '" + args[0] + "'";
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/test");
+        conn.createStatement().executeQuery(sql);
     }
 
     public static String docToString(final Document poDocument) throws TransformerException {
@@ -29,6 +36,7 @@ public class XXEVuln {
             int a = 1;
             return "foo";
         }
+
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource domSrc = new DOMSource(poDocument);
