@@ -23,7 +23,7 @@ public class XXEVuln {
 
     public static void main(String[] args) throws TransformerException, ParserConfigurationException, IOException, SAXException, SQLException {
         docToString(null);
-        saxTransformer();
+        saxTransformer(args[0]);
         withDom(args[1]);
 
         String sql = "select * from users where name= '" + args[0] + "'";
@@ -46,13 +46,13 @@ public class XXEVuln {
         return sw.toString();
     }
 
-    public static void saxTransformer() throws ParserConfigurationException, SAXException, IOException {
+    public static void saxTransformer(String xml) throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setValidating(true);
 
         SAXParser saxParser = spf.newSAXParser();
         XMLReader xmlReader = saxParser.getXMLReader();
-        xmlReader.parse(new InputSource(new StringReader("some xml here")));
+        xmlReader.parse(new InputSource(new StringReader(xml)));
     }
 
     public static Document withDom(String xml) throws ParserConfigurationException, IOException, SAXException {
