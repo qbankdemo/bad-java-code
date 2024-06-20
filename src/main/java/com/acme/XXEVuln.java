@@ -4,6 +4,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 import javax.xml.parsers.*;
 import javax.xml.transform.Transformer;
@@ -25,6 +26,7 @@ public class XXEVuln {
         docToString(null);
         saxTransformer(args[0]);
         withDom(args[1]);
+        withReaderFactory(null);
 
         String sql = "select * from users where name= '" + args[0] + "'";
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/test");
@@ -59,5 +61,9 @@ public class XXEVuln {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
         return db.parse(new InputSource(new StringReader(xml)));
+    }
+
+    public static XMLReader withReaderFactory(XMLReaderFactory factory) throws ParserConfigurationException, IOException, SAXException {
+        return factory.createXMLReader();
     }
 }
