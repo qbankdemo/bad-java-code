@@ -52,7 +52,7 @@ public class XXEVuln {
 
         SAXParser saxParser = spf.newSAXParser();
         XMLReader xmlReader = saxParser.getXMLReader();
-        xmlReader.parse("file.xml");
+        xmlReader.parse(new InputSource(new StringReader("some xml here")));
     }
 
     public static Document withDom(String xml) throws ParserConfigurationException, IOException, SAXException {
