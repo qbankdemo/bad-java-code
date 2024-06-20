@@ -66,7 +66,7 @@ public class XXEVuln {
 
     public static Document withDomButDisabled(String xml) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        dbf.setExpandEntityReferences(false);
+        dbf.setExpandEntityReferences(true);
         DocumentBuilder db = dbf.newDocumentBuilder();
         return db.parse(new InputSource(new StringReader(xml)));
     }
