@@ -26,6 +26,7 @@ public class XXEVuln {
         docToString(null);
         saxTransformer(args[0]);
         withDom(args[1]);
+        withDomButDisabled(args[2]);
         withReaderFactory(null);
 
         String sql = "select * from users where name= '" + args[0] + "'";
@@ -59,6 +60,13 @@ public class XXEVuln {
 
     public static Document withDom(String xml) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        return db.parse(new InputSource(new StringReader(xml)));
+    }
+
+    public static Document withDomButDisabled(String xml) throws ParserConfigurationException, IOException, SAXException {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setExpandEntityReferences(false);
         DocumentBuilder db = dbf.newDocumentBuilder();
         return db.parse(new InputSource(new StringReader(xml)));
     }
