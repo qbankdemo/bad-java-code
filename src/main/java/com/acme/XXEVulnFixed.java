@@ -6,6 +6,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.*;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -41,6 +42,7 @@ public class XXEVulnFixed {
         }
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource domSrc = new DOMSource(poDocument);
         StringWriter sw = new StringWriter();

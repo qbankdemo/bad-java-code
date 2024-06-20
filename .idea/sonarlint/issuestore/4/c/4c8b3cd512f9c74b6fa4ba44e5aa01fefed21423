@@ -1,0 +1,21 @@
+
+l
+java:S2259"Q"NullPointerException" will be thrown when invoking method "withReaderFactory()".(Øƒš‡úÿÿÿÿ
+N
+java:S27555"3Disable access to external entities in XML parsing.(Ë“Ößúÿÿÿÿ
+N
+java:S2755D"3Disable access to external entities in XML parsing.(ƒ”±êùÿÿÿÿ
+N
+java:S2755K"3Disable access to external entities in XML parsing.(ù›‚Ûüÿÿÿÿ
+N
+java:S2755>"3Disable access to external entities in XML parsing.(ƒ”±êùÿÿÿÿ
+A
+java:S1481'"&Remove this unused "a" local variable.(–ÎåÌûÿÿÿÿ
+
+java:S1130J"‡Remove the declaration of thrown exception 'javax.xml.parsers.ParserConfigurationException', as it cannot be thrown from method's body.(ÿíÄâ
+‚
+java:S1130J"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(ÿíÄâ
+N
+java:S1874J"8Remove this use of "XMLReaderFactory"; it is deprecated.(ÿíÄâ
+P
+java:S2209K"5Change this instance-reference to a static reference.(ù›‚Ûüÿÿÿÿ
