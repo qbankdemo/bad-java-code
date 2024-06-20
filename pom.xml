@@ -28,6 +28,11 @@
         <artifactId>jakarta.ws.rs-api</artifactId>
         <version>3.1.0</version>
       </dependency>
+      <dependency>
+        <groupId>io.github.pixee</groupId>
+        <artifactId>java-security-toolkit</artifactId>
+        <version>1.1.2</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -35,6 +40,10 @@
     <dependency>
       <groupId>jakarta.ws.rs</groupId>
       <artifactId>jakarta.ws.rs-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.github.pixee</groupId>
+      <artifactId>java-security-toolkit</artifactId>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
