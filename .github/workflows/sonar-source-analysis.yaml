@@ -1,0 +1,34 @@
+# Sonar Scanner for Maven requires that the project is built before the analysis.
+# Yet, running the Sonar Scanner action without building the project yields some results.
+# This action uses this edge-case set-up, to help us understand what results we can expect when using Sonar Scanner action to analyze Java source files.
+name: SonarCloud (Source Only)
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and Analyze (Source Only)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Analyze Source Only
+        uses: sonarsource/sonarqube-scan-action@v2
+        with:
+          args: >
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.organization=pixee
+            -Dsonar.projectKey=pixee_bad-java-code
+            -Dsonar.sources=src/main/java
+            -Dsonar.java.binaries=.
+            -Dsonar.sourceEncoding=UTF-8
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
