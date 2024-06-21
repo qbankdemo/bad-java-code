@@ -89,6 +89,8 @@ public class XXEVulnFixed {
   public static void withReaderFactory(String xml)
       throws IOException, SAXException {
     XMLReader reader = XMLReaderFactory.createXMLReader();
+    reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+    reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     reader.parse(new InputSource(new StringReader(xml)));
   }
 }
