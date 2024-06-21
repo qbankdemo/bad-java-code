@@ -31,7 +31,7 @@ public class XXEVuln {
     saxTransformer(args[0]);
     withDom(args[1]);
     withDomButDisabled(args[2]);
-    withReaderFactory(null);
+    withReaderFactory(args[3]);
 
     String sql = "select * from users where name= '" + args[0] + "'";
     Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/test");
@@ -78,8 +78,9 @@ public class XXEVuln {
     return db.parse(new InputSource(new StringReader(xml)));
   }
 
-  public static XMLReader withReaderFactory(XMLReaderFactory factory)
-      throws ParserConfigurationException, IOException, SAXException {
-    return factory.createXMLReader();
+  public static void withReaderFactory(String xml)
+      throws IOException, SAXException {
+    XMLReader reader = XMLReaderFactory.createXMLReader();
+    reader.parse(new InputSource(new StringReader(xml)));
   }
 }
