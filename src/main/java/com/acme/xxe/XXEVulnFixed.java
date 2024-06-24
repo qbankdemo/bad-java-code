@@ -1,50 +1,40 @@
-package com.acme;
+package com.acme.xxe;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import javax.xml.parsers.*;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+import javax.xml.XMLConstants;
+import javax.xml.parsers.*;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+
 /** Holds various XXE vulns for different APIs. */
-public class XXEVuln {
+public class XXEVulnFixed {
 
   public static void main(String[] args)
       throws TransformerException,
           ParserConfigurationException,
           IOException,
-          SAXException,
-          SQLException {
+          SAXException {
     docToString(null);
     saxTransformer(args[0]);
     withDom(args[1]);
     withDomButDisabled(args[2]);
     withReaderFactory(args[3]);
-
-    String sql = "select * from users where name= '" + args[0] + "'";
-    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/test");
-    conn.createStatement().executeQuery(sql);
   }
 
   public static String docToString(final Document poDocument) throws TransformerException {
-    if (true) {
-      int a = 1;
-      return "foo";
-    }
-
     TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
     Transformer transformer = transformerFactory.newTransformer();
     DOMSource domSrc = new DOMSource(poDocument);
     StringWriter sw = new StringWriter();
@@ -56,6 +46,8 @@ public class XXEVuln {
   public static void saxTransformer(String xml)
       throws ParserConfigurationException, SAXException, IOException {
     SAXParserFactory spf = SAXParserFactory.newInstance();
+    spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+    spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     spf.setValidating(true);
 
     SAXParser saxParser = spf.newSAXParser();
@@ -66,6 +58,8 @@ public class XXEVuln {
   public static Document withDom(String xml)
       throws ParserConfigurationException, IOException, SAXException {
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+    dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     DocumentBuilder db = dbf.newDocumentBuilder();
     return db.parse(new InputSource(new StringReader(xml)));
   }
@@ -73,6 +67,8 @@ public class XXEVuln {
   public static Document withDomButDisabled(String xml)
       throws ParserConfigurationException, IOException, SAXException {
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+    dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+    dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     dbf.setExpandEntityReferences(true);
     DocumentBuilder db = dbf.newDocumentBuilder();
     return db.parse(new InputSource(new StringReader(xml)));
@@ -81,6 +77,8 @@ public class XXEVuln {
   public static void withReaderFactory(String xml)
       throws IOException, SAXException {
     XMLReader reader = XMLReaderFactory.createXMLReader();
+    reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+    reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     reader.parse(new InputSource(new StringReader(xml)));
   }
 }
