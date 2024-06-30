@@ -1,8 +1,6 @@
 package com.acme.jndi;
 
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -16,5 +14,15 @@ public class JNDIVuln {
         Context ctx = new InitialContext();
         Object obj = ctx.lookup(resource);
         return String.valueOf(obj);
+    }
+
+    @POST
+    public String lookupAnotherResource(@QueryParam("resource") final String resource) throws NamingException {
+        return FindResource.findResource(resource);
+    }
+
+    @PUT
+    public String lookupYetAnotherResource(@QueryParam("resource") final String resource) throws NamingException {
+        return FindResource.findResource(resource);
     }
 }
